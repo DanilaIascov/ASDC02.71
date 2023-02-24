@@ -6,7 +6,7 @@ from src.student import Student
 
 def prepare_data(to_shuffle: bool = False) -> list:
     reader = csv.DictReader
-    data = list(Student.reading_from_stream('student_data.csv', reader))
+    data = list(Student.reading_from_stream('data/students_data.csv', reader))
     if to_shuffle:
         shuffle(data)
     return data
@@ -22,3 +22,6 @@ def make_timer(callback, *args):
 
 if __name__ == '__main__':
     students = prepare_data()
+    for student in students:
+        print(student)
+    Student.writing_in_stream(students[0], 'data/check_write_method.csv', csv.DictWriter)
