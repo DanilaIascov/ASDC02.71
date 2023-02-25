@@ -1,6 +1,6 @@
 import os.path
 
-from faculty import Faculty
+from ASDC_lab0.src.classes.faculty import Faculty
 
 
 class Student:
