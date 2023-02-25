@@ -1,3 +1,8 @@
+import os.path
+
+from faculty import Faculty
+
+
 class Student:
     def __init__(
             self,
@@ -13,7 +18,7 @@ class Student:
         self.__idnp = idnp
         self.__year_of_enrollment = year_of_enrollment
         self.__year_of_birth = year_of_birth
-        self.__faculty = faculty
+        self.__faculty = Faculty.get_faculty_index(faculty)
 
     def __copy__(self):
         copy_instance = Student(
@@ -101,30 +106,76 @@ class Student:
         return False
 
     @staticmethod
-    def reading_from_stream(filename: str, reader):
-        with open(filename, 'r', newline='') as csvfile:
-            data = reader(csvfile)
-            for row in data:
-                yield Student(
+    def read_from_stream(filename: str | None = None, reader=None, data=None):
+        return StudentSerializer.read(filename, reader, data)
+
+    @staticmethod
+    def write_in_stream(obj, filename: str, writer):
+        return StudentSerializer.write(obj, filename, writer)
+
+
+class StudentSerializer:
+    __compatible_formats: list[str] = ['.json', '.csv']
+
+    @staticmethod
+    def read(filename: str | None = None, reader=None, data=None):
+        # to use a data dictionary instead of a file
+        if filename is None and dict is not None:
+            return [
+                Student(
                     firstname=row['first_name'],
                     lastname=row['last_name'],
                     year_of_birth=int(row['year_of_birth']),
                     year_of_enrollment=int(row['year_of_enrollment']),
                     idnp=int(row['idnp']),
                     faculty=row['faculty']
-                )
+                ) for row in data
+            ]
+        # to use a file
+        else:
+            _, file_format = os.path.splitext(filename)
+            if file_format in StudentSerializer.__compatible_formats:
+                with open(filename, 'r', newline='') as file:
+                    return [
+                        Student(
+                            firstname=row['first_name'],
+                            lastname=row['last_name'],
+                            year_of_birth=int(row['year_of_birth']),
+                            year_of_enrollment=int(row['year_of_enrollment']),
+                            idnp=int(row['idnp']),
+                            faculty=row['faculty']
+                        ) for row in reader(file)
+                    ]
+            raise Exception(f'{file_format} format is not compatible, use {StudentSerializer.__compatible_formats}')
 
     @staticmethod
-    def writing_in_stream(obj, filename: str, writer):
-        with open(filename, 'w', newline='') as csvfile:
-            fieldnames = ['first_name', 'last_name', 'year_of_birth', 'year_of_enrollment', 'idnp', 'faculty']
-            writer = writer(csvfile, fieldnames=fieldnames)
-            writer.writeheader()
-            writer.writerow({
-                'first_name': obj.firstname,
-                'last_name': obj.lastname,
-                'year_of_birth': obj.year_of_birth,
-                'year_of_enrollment': obj.year_of_enrollment,
-                'idnp': obj.idnp,
-                'faculty': obj.faculty
-            })
+    def write(obj, filename, writer):
+        _, file_format = os.path.splitext(filename)
+        if file_format in StudentSerializer.__compatible_formats:
+            dictionary = {
+                "first_name": obj.firstname,
+                "last_name": obj.lastname,
+                "year_of_birth": obj.year_of_birth,
+                "year_of_enrollment": obj.year_of_enrollment,
+                "idnp": obj.idnp,
+                "faculty": Faculty.get_faculty_name(obj.faculty)
+            }
+            with open(filename, 'w', newline='') as file:
+                match file_format.lower():
+                    case '.csv':
+                        fieldnames = [
+                            'first_name',
+                            'last_name',
+                            'year_of_birth',
+                            'year_of_enrollment',
+                            'idnp',
+                            'faculty'
+                        ]
+                        writer = writer(file, fieldnames=fieldnames)
+                        writer.writeheader()
+                        writer.writerow(dictionary)
+                    case '.json':
+                        writer(dictionary, file)
+                return 1
+
+        raise Exception(f'{file_format} format is not compatible, use {StudentSerializer.__compatible_formats}')
