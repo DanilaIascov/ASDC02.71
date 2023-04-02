@@ -1,4 +1,5 @@
 class Faculty:
+    """Class representing the entity of the faculty"""
     faculties = [
         'Faculty of Biology and Geoscience',
         'Faculty of Chemistry and Chemical Technology',
@@ -12,9 +13,21 @@ class Faculty:
         'Faculty of Psychology',
         'Faculty of International Relations'
     ]
+
     @staticmethod
-    def get_faculty_name(index:int):
+    def get_faculty_name(index: int):
+        """Returns string faculty name
+
+        :param index: int representation of faculty
+        :return: string representation of faculty
+        """
         return Faculty.faculties[index]
+
     @staticmethod
-    def get_faculty_index(name:str):
+    def get_faculty_index(name: str):
+        """Returns string faculty index
+
+        :param name: string representation of faculty
+        :return: int representation of faculty
+        """
         return Faculty.faculties.index(name)

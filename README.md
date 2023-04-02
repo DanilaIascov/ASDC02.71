@@ -1,25 +1,29 @@
-# ASDC lab0
+# ASDC02.71
+## Project description
+    This project implements a student data structure and methods for working with it
+    The student data structure includes the following fields:
+        1. firstname
+        2. lastname
+        3. faculty
+        4. year of birth
+        5. year of enrolment
+        6. identification number
+    For this data structure are defined:
+        1. copy constructor
+        2. copy operator (method) ( =, clone)
+        3. comparison operator (method) ( ==, equal)
+        4. method of reading from the stream
+        5. method of writing into the stream
 
-**структура данных: студент**
+## Description of dependencies
+    Python 3 interpertator
+## Description of how to start the application
+### Execute the following commands:
 
-1. имя
-2. фамилия
-3. факультет
-4. год рождения
-5. год поступления
-6. идентификационный номер
+`git clone https://github.com/DanilaIascov/ASDC02.71`
 
-**Необходимо выполнить следующие условия:**
+`cd ./ASDC02.71/`
 
-Создайте текстовый файл который содержит 50 записей. Каждая запись имеет минимум 5 полей с минимум 2-мя типами данных.
-Ключевое поле должно быть уникальным. Записи не упорядочены. Тематика структуры данных определяется каждым студентом
-совместно с преподавателем на лабораторных занятиях.
-Напишите программу, определяющую структуру данных записей. Для данной структуры данных определите:
+`python main.py`
 
-* конструктор по умолчанию
-* конструктор копирования
-* оператор (метод) копирования (=, clone)
-* оператор (метод) сравнения ( ==, equal)
-* оператор (метод) чтения из потока
-* оператор (метод) записи в поток
 

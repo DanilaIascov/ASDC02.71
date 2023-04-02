@@ -2,12 +2,12 @@ import csv
 import json
 from random import shuffle
 
-from ASDC_lab0.src.classes.student import Student
+from src.entity.student import Student
 
 
 def prepare_data(to_shuffle: bool = False) -> list:
     reader = csv.DictReader
-    data = Student.read_from_stream(filename='data/students_data.csv', reader=reader)
+    data = Student.read_from_stream(reader=reader, filename='data/students_data.csv')
     if to_shuffle:
         shuffle(data)
     return data
@@ -15,6 +15,7 @@ def prepare_data(to_shuffle: bool = False) -> list:
 
 if __name__ == '__main__':
     students = prepare_data()
-    for student in students:
-        print(student)
-    Student.write_in_stream(students[0], 'data/check_write_method.json', json.dump)
+
+    Student.write_in_stream(students, csv.DictWriter, 'data/check_write_method.csv')
+    Student.write_in_stream(students, json.dump, 'data/check_write_method.json')
+    Student.write_in_stream(students)
