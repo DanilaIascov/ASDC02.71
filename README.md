@@ -1,5 +1,7 @@
 # ASDC02.71
+
 ## Project description
+
     This project implements a student data structure and methods for working with it
     The student data structure includes the following fields:
         1. firstname
@@ -16,8 +18,11 @@
         5. method of writing into the stream
 
 ## Description of dependencies
+
     Python 3 interpertator
+
 ## Description of how to start the application
+
 ### Execute the following commands:
 
 `git clone https://github.com/DanilaIascov/ASDC02.71`

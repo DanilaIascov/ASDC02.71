@@ -19,7 +19,7 @@ class Student:
             self,
             firstname: str = 'empty',
             lastname: str = 'empty',
-            faculty: str = Faculty.get_faculty_name(0),
+            faculty: str = 'None',
             year_of_birth: int = 0,
             year_of_enrollment: int = 0,
             idnp: int = 0
@@ -33,12 +33,12 @@ class Student:
         :param year_of_enrollment:
         :param idnp:
         """
-        self.__firstname = firstname
-        self.__lastname = lastname
-        self.__idnp = idnp
-        self.__year_of_enrollment = year_of_enrollment
-        self.__year_of_birth = year_of_birth
-        self.__faculty = Faculty.get_faculty_index(faculty)
+        self.firstname = firstname
+        self.lastname = lastname
+        self.idnp = idnp
+        self.year_of_enrollment = year_of_enrollment
+        self.year_of_birth = year_of_birth
+        self.faculty = Faculty.get_faculty_index(faculty)
 
     def __copy__(self) -> object:
         """Returns a copy of the object
@@ -54,103 +54,6 @@ class Student:
             faculty=Faculty.get_faculty_name(self.faculty)
         )
         return copy_instance
-
-    @property
-    def firstname(self) -> str:
-        """Getter of firstname
-
-        :return: str firstname
-        """
-        return self.__firstname
-
-    @firstname.setter
-    def firstname(self, value) -> None:
-        """Setter firstname
-
-        :param value: str new firstname
-        """
-        self.__firstname = value
-
-    @property
-    def lastname(self) -> str:
-        """Getter of lastname
-
-        :return: str lastname
-        """
-        return self.__lastname
-
-    @lastname.setter
-    def lastname(self, value) -> None:
-        """Setter lastname
-
-        :param value: str new lastname
-        """
-        self.__lastname = value
-
-    @property
-    def faculty(self) -> int:
-        """Getter of faculty
-        Returns int representation of faculty
-
-        :return: int value of faculty
-        """
-        return self.__faculty
-
-    @faculty.setter
-    def faculty(self, value: int) -> None:
-        """Setter  faculty
-
-        :param value: int new faculty index
-        """
-        self.__faculty = value
-
-    @property
-    def year_of_birth(self) -> int:
-        """Getter of year of birth
-
-        :return: int year of birth
-        """
-        return self.__year_of_birth
-
-    @year_of_birth.setter
-    def year_of_birth(self, value: int) -> None:
-        """Setter year of birth
-
-        :param value: int new year of birth
-        """
-        self.__year_of_birth = value
-
-    @property
-    def year_of_enrollment(self) -> int:
-        """Getter of year of enrollment
-
-        :return: int year of enrollment
-        """
-        return self.__year_of_enrollment
-
-    @year_of_enrollment.setter
-    def year_of_enrollment(self, value: int) -> None:
-        """Setter year of enrollment
-
-        :param value: int new year of enrollment
-        """
-        self.__year_of_enrollment = value
-
-    @property
-    def idnp(self) -> int:
-        """Getter idnp
-
-        :return: int idnp
-        """
-        return self.__idnp
-
-    @idnp.setter
-    def idnp(self, value: int) -> None:
-        """Setter idnp
-
-        :param value: int new idnp
-        """
-        self.__idnp = value
 
     def assign(self, other) -> None:
         """Assignment operator overload
@@ -169,7 +72,7 @@ class Student:
                f'lastname: {self.lastname}, ' \
                f'faculty: {Faculty.get_faculty_name(self.faculty)}, ' \
                f'year of birth: {self.year_of_birth}, ' \
-               f'year of enrollment: {self.__year_of_enrollment}, ' \
+               f'year of enrollment: {self.year_of_enrollment}, ' \
                f'idnp: {self.idnp}'
 
     def __eq__(self, other) -> bool:
